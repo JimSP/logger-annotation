@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 public @interface Log {
 
 	VerboseMode verboseMode() default VerboseMode.OFF;
-	
+
 }

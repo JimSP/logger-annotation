@@ -15,15 +15,26 @@ public class Example {
 
 	@Log(verboseMode=VerboseMode.ON)
 	public String testVerboseON(final String value, final List<String> values) {
-		return value
+		
+	    return value
 				.concat(values.stream()
 				.reduce((a, b) -> orEmpty(a).concat(orEmpty(b)))
 				.orElse(EMPTY));
 	}
 	
+	@Log
+    public String testVerboseStringON(final String value, final List<String> values) {
+        
+	    return value
+                .concat(values.stream()
+                .reduce((a, b) -> orEmpty(a).concat(orEmpty(b)))
+                .orElse(EMPTY));
+    }
+	
 	@Log(verboseMode=VerboseMode.OFF)
 	public String testVerboseOFF(final String value, final List<String> values) {
-		return value
+		
+	    return value
 				.concat(values.stream()
 				.reduce((a, b) -> orEmpty(a).concat(orEmpty(b)))
 				.orElse(EMPTY));
@@ -35,7 +46,8 @@ public class Example {
 	}
 
 	private String orEmpty(final String value) {
-		return Optional
+		
+	    return Optional
 				.ofNullable(value)
 				.orElse(EMPTY);
 	}

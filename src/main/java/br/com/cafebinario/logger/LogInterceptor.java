@@ -1,6 +1,7 @@
 package br.com.cafebinario.logger;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,11 +9,16 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LogInterceptor {
+    
+    @Value("${br.com.cafebinario.logger.verboseMode:OFF}")
+    private VerboseMode systemVerboseMode;
 
     @Around("@annotation(Log)")
     public Object log(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -28,15 +34,18 @@ public class LogInterceptor {
 
         final LogContext logContext = createLogContext(methodSignature, args);
 
-        final VerboseMode verboseMode = getVerboseMode(methodSignature);
+        final VerboseMode verboseMode = getVerboseMode(methodSignature, systemVerboseMode);
 
         final Logger logger = LoggerFactory.getLogger(targetClass);
+        
+        MDC.put("method", logContext.getMethodName());
+        MDC.put("parameters", Arrays.toString(logContext.getParameterNames()));
 
         try {
 
             return proccessLog(proceedingJoinPoint, begin, logContext, verboseMode, logger);
 
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
 
             verboseMode.logException(
                     logContext
@@ -46,6 +55,8 @@ public class LogInterceptor {
                     logger, t);
 
             throw t;
+        }finally {
+            MDC.clear();
         }
     }
 
@@ -86,12 +97,14 @@ public class LogInterceptor {
         return returnValue;
     }
 
-    private VerboseMode getVerboseMode(final MethodSignature methodSignature) {
+    private VerboseMode getVerboseMode(final MethodSignature methodSignature, final VerboseMode systemVerboseMode) {
 
         final Method method = methodSignature.getMethod();
 
         final Log logAnnotation = method.getDeclaredAnnotation(Log.class);
 
-        return logAnnotation.verboseMode();
+        final VerboseMode verboseMode = logAnnotation.verboseMode();
+        
+        return systemVerboseMode.isOn() ? systemVerboseMode : verboseMode;
     }
 }

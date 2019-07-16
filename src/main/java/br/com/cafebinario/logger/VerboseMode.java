@@ -8,10 +8,14 @@ import org.slf4j.Logger;
 public enum VerboseMode {
 
 	ON, OFF;
+    
+    public boolean isOn() {
+        return ON == this;
+    }
 		
 	public void logReturn(final LogContext logContext, final Logger logger, final Object result) {
 		
-		if(ON == this) {
+		if(isOn()) {
 			final Object[] arguments = logContext.getParameterValues();
 			final Object[] argumetsWithReturn = appendItem(appendItem(logContext.getMethodName(), arguments), result);
 			final Object[] methodNameWithEnlapseTime = appendItem(argumetsWithReturn, logContext.getEnlapseTime());

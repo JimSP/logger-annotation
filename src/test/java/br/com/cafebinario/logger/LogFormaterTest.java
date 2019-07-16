@@ -5,6 +5,9 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import br.com.cafebinario.logger.LogContext;
+import br.com.cafebinario.logger.LogFormater;
+
 public class LogFormaterTest {
 
     @Test
