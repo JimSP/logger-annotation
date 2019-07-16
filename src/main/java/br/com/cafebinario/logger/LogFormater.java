@@ -11,9 +11,13 @@ final class LogFormater {
 		return "m:{}" + formatArguments(logContext.getParameterNames());
 	}
 	
+	public static String formatWithEnlapseTime(final LogContext logContext) {
+		return format(logContext).concat(", enlapseTime:{}");
+	}
+	
 	public static String formatWithReturn(final LogContext logContext) {
 		
-		return format(logContext).concat(", return:{}");
+		return format(logContext).concat(", return:{}, enlapseTime:{}");
 	}
 
 	private static String formatArguments(final String[] parameterNames) {

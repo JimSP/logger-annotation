@@ -16,7 +16,7 @@ public class LogInterceptor {
 
 	@Around("@annotation(Log)")
 	public Object log(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
-		
+		final Long begin = System.currentTimeMillis();
 		final MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
 		final Method method = methodSignature.getMethod();
 		final String methodName = methodSignature.getName();
@@ -48,12 +48,16 @@ public class LogInterceptor {
 			verboseMode.logReturn(logContext
 					.toBuilder()
 					.returnValue(returnValue)
+					.enlapseTime(System.currentTimeMillis() - begin)
 					.build(), logger, returnValue);
 
 			return returnValue;
 			
 		}catch (Throwable t) {
-			verboseMode.logException(logContext, logger, t);
+			verboseMode.logException(logContext
+					.toBuilder()
+					.enlapseTime(System.currentTimeMillis() - begin)
+					.build(), logger, t);
 			throw t;
 		}
 	}

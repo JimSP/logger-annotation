@@ -14,9 +14,10 @@ public enum VerboseMode {
 		if(ON == this) {
 			final Object[] arguments = logContext.getParameterValues();
 			final Object[] argumetsWithReturn = appendItem(appendItem(logContext.getMethodName(), arguments), result);
+			final Object[] methodNameWithEnlapseTime = appendItem(argumetsWithReturn, logContext.getEnlapseTime());
 			final String format = LogFormater.formatWithReturn(logContext);
 
-			LogWriter.logParametersDebug(logger, format, argumetsWithReturn);
+			LogWriter.logParametersDebug(logger, format, methodNameWithEnlapseTime);
 		}
 	}
 	
@@ -24,8 +25,10 @@ public enum VerboseMode {
 		
 		final Object[] arguments = logContext.getParameterValues();
 		final Object[] methodNameWithArguments = appendItem(logContext.getMethodName(), arguments);
-		final Object[] methodNameWithException = appendItem(methodNameWithArguments, e);
-		final String format = LogFormater.format(logContext);
+		final Object[] methodNameWithEnlapseTime = appendItem(methodNameWithArguments, logContext.getEnlapseTime());
+		final Object[] methodNameWithException = appendItem(methodNameWithEnlapseTime, e);
+		
+		final String format = LogFormater.formatWithEnlapseTime(logContext);
 		
 		LogWriter.logParametersError(logger, format, methodNameWithException);
 	}

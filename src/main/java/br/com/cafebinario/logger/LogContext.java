@@ -13,4 +13,5 @@ final class LogContext {
 	private final Object[] parameterValues;
 	private final Class<?> returnType;
 	private final Object returnValue;
+	private final Long enlapseTime;
 }
