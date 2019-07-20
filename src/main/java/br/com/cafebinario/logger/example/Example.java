@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import br.com.cafebinario.logger.Log;
+import br.com.cafebinario.logger.LogLevel;
 import br.com.cafebinario.logger.VerboseMode;
 
 @Component
@@ -13,7 +14,7 @@ public class Example {
 
 	private static final String EMPTY = "";
 
-	@Log(verboseMode=VerboseMode.ON)
+	@Log(verboseMode=VerboseMode.ON, logLevel=LogLevel.DEBUG)
 	public String testVerboseON(final String value, final List<String> values) {
 		
 	    return value
@@ -22,16 +23,7 @@ public class Example {
 				.orElse(EMPTY));
 	}
 	
-	@Log
-    public String testVerboseStringON(final String value, final List<String> values) {
-        
-	    return value
-                .concat(values.stream()
-                .reduce((a, b) -> orEmpty(a).concat(orEmpty(b)))
-                .orElse(EMPTY));
-    }
-	
-	@Log(verboseMode=VerboseMode.OFF)
+	@Log(verboseMode=VerboseMode.OFF, logLevel=LogLevel.INFO)
 	public String testVerboseOFF(final String value, final List<String> values) {
 		
 	    return value
@@ -40,7 +32,7 @@ public class Example {
 				.orElse(EMPTY));
 	}
 	
-	@Log(verboseMode=VerboseMode.ON)
+	@Log(verboseMode=VerboseMode.ON, logLevel=LogLevel.INFO)
 	public String testVerboseWithError(final String value, final List<String> values) {
 		throw new IllegalArgumentException("error");
 	}

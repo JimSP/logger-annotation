@@ -16,8 +16,8 @@ import br.com.cafebinario.logger.example.Example;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Example.class, LogInterceptor.class, ConfigTest.class })
-@TestPropertySource(properties = { "br.com.cafebinario.logger.verboseMode=ON" })
-public class ExampleTest {
+@TestPropertySource(properties = { "br.com.cafebinario.logger.verboseMode=OFF" })
+public class ExampleTestVerboseModeOff {
 
     @Autowired
     private Example example;
@@ -25,11 +25,6 @@ public class ExampleTest {
     @Test
     public void testVerboseON() {
         assertThat(example.testVerboseON("a", Arrays.asList("b", "c"))).isEqualTo("abc");
-    }
-
-    @Test
-    public void testVerboseStringON() {
-        assertThat(example.testVerboseStringON("a", Arrays.asList("b", "c"))).isEqualTo("abc");
     }
 
     @Test

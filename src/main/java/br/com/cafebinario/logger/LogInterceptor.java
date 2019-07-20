@@ -32,9 +32,9 @@ public class LogInterceptor {
         
         final Object[] args = proceedingJoinPoint.getArgs();
 
-        final LogContext logContext = createLogContext(methodSignature, args);
-
-        final VerboseMode verboseMode = getVerboseMode(methodSignature, systemVerboseMode);
+        final Log log = getLog(methodSignature);
+        
+        final LogContext logContext = createLogContext(log, systemVerboseMode, methodSignature, args);
 
         final Logger logger = LoggerFactory.getLogger(targetClass);
         
@@ -43,11 +43,11 @@ public class LogInterceptor {
 
         try {
 
-            return proccessLog(proceedingJoinPoint, begin, logContext, verboseMode, logger);
+            return proccessLog(proceedingJoinPoint, begin, logContext, logger);
 
         } catch (final Throwable t) {
 
-            verboseMode.logException(
+        	LogProcessor.logException(
                     logContext
                     .toBuilder()
                     .enlapseTime(System.currentTimeMillis() - begin)
@@ -60,8 +60,8 @@ public class LogInterceptor {
         }
     }
 
-    private LogContext createLogContext(final MethodSignature methodSignature,
-            final Object[] args) {
+	private LogContext createLogContext(final Log log, final VerboseMode systemVerboseMode,
+			final MethodSignature methodSignature, final Object[] args) {
 
         final String methodName = methodSignature.getName();
         final String[] parameterNames = methodSignature.getParameterNames();
@@ -70,6 +70,8 @@ public class LogInterceptor {
 
         return LogContext
                 .builder()
+                .log(log)
+                .systemVerboseMode(systemVerboseMode)
                 .methodName(methodName)
                 .parameterNames(parameterNames)
                 .parameterTypes(parameterTypes)
@@ -78,15 +80,14 @@ public class LogInterceptor {
                 .build();
     }
 
-    private Object proccessLog(final ProceedingJoinPoint proceedingJoinPoint, final Long begin,
-            final LogContext logContext, final VerboseMode verboseMode, final Logger logger)
-            throws Throwable {
+	private Object proccessLog(final ProceedingJoinPoint proceedingJoinPoint, final Long begin,
+			final LogContext logContext, final Logger logger) throws Throwable {
 
-        verboseMode.logParameters(logContext, logger);
+    	LogProcessor.logParameters(logContext, logger);
 
         final Object returnValue = proceedingJoinPoint.proceed();
 
-        verboseMode.logReturn(
+        LogProcessor.logReturn(
                 logContext
                     .toBuilder()
                     .returnValue(returnValue)
@@ -97,14 +98,10 @@ public class LogInterceptor {
         return returnValue;
     }
 
-    private VerboseMode getVerboseMode(final MethodSignature methodSignature, final VerboseMode systemVerboseMode) {
+    private Log getLog(final MethodSignature methodSignature) {
 
         final Method method = methodSignature.getMethod();
 
-        final Log logAnnotation = method.getDeclaredAnnotation(Log.class);
-
-        final VerboseMode verboseMode = logAnnotation.verboseMode();
-        
-        return systemVerboseMode.isOn() ? systemVerboseMode : verboseMode;
+        return method.getDeclaredAnnotation(Log.class);
     }
 }

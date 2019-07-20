@@ -22,19 +22,19 @@ public class LogWriterTest {
 
     @Test
     public void testDebug() {
-        LogWriter.logParametersDebug(logger, FORMAT, PARAMETERS);
+        LogWriter.log(LogLevel.DEBUG, logger, FORMAT, PARAMETERS);
         Mockito.verify(logger).debug(FORMAT, PARAMETERS);
     }
     
     @Test
     public void testInfo() {
-        LogWriter.logParametersInfo(logger, FORMAT, PARAMETERS);
+        LogWriter.log(LogLevel.INFO, logger, FORMAT, PARAMETERS);
         Mockito.verify(logger).info(FORMAT, PARAMETERS);
     }
     
     @Test
     public void testError() {
-        LogWriter.logParametersError(logger, FORMAT, PARAMETERS);
+        LogWriter.log(LogLevel.ERROR, logger, FORMAT, PARAMETERS);
         Mockito.verify(logger).error(FORMAT, PARAMETERS);
     }
 }

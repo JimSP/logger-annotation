@@ -7,6 +7,8 @@ import lombok.Data;
 @Builder(toBuilder=true)
 final class LogContext {
 
+	private final VerboseMode systemVerboseMode;
+	private final Log log;
 	private final String methodName;
 	private final String[] parameterNames;
 	private final Class<?>[] parameterTypes;

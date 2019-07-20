@@ -11,5 +11,6 @@ import java.lang.annotation.Target;
 public @interface Log {
 
 	VerboseMode verboseMode() default VerboseMode.OFF;
+	LogLevel logLevel() default LogLevel.INFO;
 
 }
