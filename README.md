@@ -82,3 +82,37 @@ public class Example {
 	}
 }
 ```
+
+## Maven
+
+	<dependencies>
+	...
+	
+		<dependency>
+			<groupId>br.com.cafebinario</groupId>
+			<artifactId>logger-annotation</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
+	
+	...
+	<dependencies>
+
+	
+	<repositories>
+	...
+	
+		<repository>
+			<id>mvn-repo</id>
+			<url>https://github.com/JimSP/artifacts/master</url>
+	
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+	
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	
+	...
+	</repositories>
