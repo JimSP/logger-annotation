@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(value = { LogConfiguration.class })
+@Import(value = { LogConfiguration.class, LogInterceptor.class })
 public @interface EnableLog {
 
 }

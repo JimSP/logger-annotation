@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-br.com.cafebinario.logger.LogConfiguration
+br.com.cafebinario.logger.LogConfiguration,\
+br.com.cafebinario.logger.LogInterceptor
