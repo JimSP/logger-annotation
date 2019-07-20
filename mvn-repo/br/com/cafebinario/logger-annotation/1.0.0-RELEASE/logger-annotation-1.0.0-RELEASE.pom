@@ -76,7 +76,6 @@
 	</dependencies>
 
 	<repositories>
-
 		<repository>
 			<id>mvn-repo</id>
 			<url>https://github.com/JimSP/artifacts/master</url>
