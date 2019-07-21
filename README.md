@@ -1,5 +1,10 @@
 # logger-annotation
 
+
+## Pré Requisito.
+	O Projeto deve obrigatóriamente ser uma aplicação Spring Boot com suporte para Aspectos.
+
+
 ##Anotação @Log para métodos.
 
 	Será feita escrita automática na saída padrão de log (api SLF4) quando o método for anotado com @Log.
@@ -9,6 +14,7 @@
    
 	Sempre que ocorrer uma Exception, a anotação @Log irá interceptar o Erro e escrever a mesma no log.
 
+
 ##Propriedade br.com.cafebinario.logger.verboseMode:
 
 	br.com.cafebinario.logger.verboseMode: 'ON'
@@ -16,6 +22,7 @@
 	
 	br.com.cafebinario.logger.verboseMode: 'OFF'
 	-> será considerado o parametro informado na anotação @Log(verboseMode)
+
 
 ##Exemplo: (assumindo br.com.cafebinario.logger.verboseMode=OFF)
 
@@ -83,6 +90,7 @@ public class Example {
 }
 ```
 
+
 ## Maven
 
 	<dependencies>
@@ -103,7 +111,7 @@ public class Example {
 	
 		<repository>
 			<id>mvn-repo</id>
-			<url>https://github.com/JimSP/artifacts/master</url>
+			<url>https://raw.github.com/JimSP/artifacts/master</url>
 	
 			<releases>
 				<enabled>true</enabled>
@@ -116,3 +124,26 @@ public class Example {
 	
 	...
 	</repositories>
+
+
+## Gradle
+
+	buildscript {
+	    repositories {
+			...
+			
+			maven {
+	      		url 'https://raw.github.com/JimSP/artifacts/master'
+	    	}
+	    	
+	    	...
+		}
+	}
+
+	dependencies {
+		...
+		
+		compile 'br.com.cafebinario:logger-annotation:1.0.0-RELEASE'
+		
+		...
+	}
