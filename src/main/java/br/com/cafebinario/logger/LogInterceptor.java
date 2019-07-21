@@ -11,16 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Aspect
-@Configuration
+@Component
 public class LogInterceptor {
     
     @Value("${br.com.cafebinario.logger.verboseMode:OFF}")
     private VerboseMode systemVerboseMode;
 
-    @Around("@annotation(Log)")
+    @Around("@annotation(br.com.cafebinario.logger.Log)")
     public Object log(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         final Long begin = System.currentTimeMillis();
