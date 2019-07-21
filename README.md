@@ -5,7 +5,7 @@
 	O Projeto deve obrigatóriamente ser uma aplicação Spring Boot com suporte para Aspectos.
 
 
-##Anotação @Log para métodos.
+### Anotação @Log para métodos.
 
 	Será feita escrita automática na saída padrão de log (api SLF4) quando o método for anotado com @Log.
 
@@ -15,7 +15,7 @@
 	Sempre que ocorrer uma Exception, a anotação @Log irá interceptar o Erro e escrever a mesma no log.
 
 
-##Propriedade br.com.cafebinario.logger.verboseMode:
+### Propriedade br.com.cafebinario.logger.verboseMode:
 
 	br.com.cafebinario.logger.verboseMode: 'ON'
 	-> será desconsiderado o parametro informado na anotação @Log(verboseMode) e assumirá a propriedade.
@@ -24,7 +24,7 @@
 	-> será considerado o parametro informado na anotação @Log(verboseMode)
 
 
-##Exemplo: (assumindo br.com.cafebinario.logger.verboseMode=OFF)
+### Exemplo: (assumindo br.com.cafebinario.logger.verboseMode=OFF)
 
 ```java
 package br.com.cafebinario.logger.example;
@@ -91,7 +91,7 @@ public class Example {
 ```
 
 
-## Maven
+### Maven
 
 	<dependencies>
 	...
@@ -126,7 +126,7 @@ public class Example {
 	</repositories>
 
 
-## Gradle
+### Gradle
 
 	buildscript {
 	    repositories {
